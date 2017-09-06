@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TableViewCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var aaa: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,7 +25,8 @@ class TableViewCell: UITableViewCell {
     }
 
     func bindData(text: String) {
-        label.text = text
+        guard let imageUrl = URL(string: text) else { return }
+        aaa.sd_setImage(with: imageUrl, completed: nil)
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ViewController: UIViewController {
 
@@ -21,27 +22,26 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
-        cell.bindData(text: "section: \(indexPath.section) index: \(indexPath.row)")
+        cell.bindData(text: "https://moshimodogu.com/_img/cut/doraemon.png")
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 500
     }
 }
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("section: \(indexPath.section) index: \(indexPath.row)")
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
