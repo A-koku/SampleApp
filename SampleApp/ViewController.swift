@@ -12,25 +12,58 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
+    fileprivate var articles: [[String: Any]] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchArticles()
+        initTableView()
+    }
 
+    private func fetchArticles() {
+        guard let url: URL = URL(string: "http://qiita.com/api/v2/items") else { return }
+        let task: URLSessionTask  = URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
+            do {
+                guard let data = data else { return }
+                guard let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [Any] else { return }
+                let articles = json.flatMap { (article) -> [String: Any]? in
+                    return article as? [String: Any]
+                }
+                print(articles)
+                DispatchQueue.main.async() { () -> Void in
+                    self.articles = articles
+                }
+            }
+            catch {
+                print(error)
+            }
+        })
+        task.resume()
+    }
+
+    private func initTableView() {
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableViewCell")
     }
 }
 
 extension ViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return articles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
-        cell.bindData(text: "section: \(indexPath.section) index: \(indexPath.row)")
+        let article = articles[indexPath.row]
+        let title = article["title"] as? String ?? ""
+        cell.bindData(text: "title: \(title)")
         return cell
     }
 
