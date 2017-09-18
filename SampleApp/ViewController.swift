@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    fileprivate var articles: [[String: Any]] = [] {
+    fileprivate var articles: [Article] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -29,11 +29,13 @@ class ViewController: UIViewController {
         let task: URLSessionTask  = URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             do {
                 guard let data = data else { return }
-                guard let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [Any] else { return }
-                let articles = json.flatMap { (article) -> [String: Any]? in
-                    return article as? [String: Any]
+                guard let jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [Any] else { return }
+                let articlesJson = jsonArray.flatMap { (json: Any) -> [String: Any]? in
+                    return json as? [String: Any]
                 }
-                print(articles)
+                let articles = articlesJson.map { (articleJson: [String: Any]) -> Article in
+                    return Article(json: articleJson)
+                }
                 DispatchQueue.main.async() { () -> Void in
                     self.articles = articles
                 }
@@ -62,13 +64,12 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TableViewCell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
         let article = articles[indexPath.row]
-        let title = article["title"] as? String ?? ""
-        cell.bindData(text: "title: \(title)")
+        cell.bindData(article: article)
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 200
     }
 }
 
