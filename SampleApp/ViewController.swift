@@ -49,6 +49,8 @@ class ViewController: UIViewController {
 
     private func initTableView() {
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableViewCell")
+        tableView.estimatedRowHeight = 150
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 }
 
@@ -69,7 +71,7 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return UITableViewAutomaticDimension
     }
 }
 
