@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Article Detail View Controller-->
         <scene sceneID="tyz-hT-4WC">
             <objects>
-                <viewController id="2pV-Qm-hlX" sceneMemberID="viewController">
+                <viewController id="2pV-Qm-hlX" customClass="ArticleDetailViewController" customModule="SampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fRR-z1-JdP"/>
                         <viewControllerLayoutGuide type="bottom" id="RMo-fv-sWA"/>
@@ -20,8 +20,25 @@
                     <view key="view" contentMode="scaleToFill" id="svd-HP-X3w">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MfH-8A-ejS">
+                                <rect key="frame" x="20" y="40" width="335" height="607"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MfH-8A-ejS" firstAttribute="top" secondItem="fRR-z1-JdP" secondAttribute="bottom" constant="20" id="Bxb-vb-ttw"/>
+                            <constraint firstItem="MfH-8A-ejS" firstAttribute="leading" secondItem="svd-HP-X3w" secondAttribute="leading" constant="20" id="DKo-t6-Jh5"/>
+                            <constraint firstItem="RMo-fv-sWA" firstAttribute="top" secondItem="MfH-8A-ejS" secondAttribute="bottom" constant="20" id="FN2-Cy-cII"/>
+                            <constraint firstAttribute="trailing" secondItem="MfH-8A-ejS" secondAttribute="trailing" constant="20" id="pPN-mR-HSO"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bodyLabel" destination="MfH-8A-ejS" id="eEh-Wk-VOV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="58o-NA-BRV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
