@@ -16,23 +16,23 @@ class ViewModel {
         }
     }
 
-    private var count: Int = 1
-    private var loadStatus: String = "initial"
+    private var page: Int = 1
+    private var loadStatus: LoadStatus = .initial
 
     var reloadHandler: () -> Void = { _ in }
 
     func fetchArticles() {
-        guard loadStatus != "fetching" && loadStatus != "full" else { return }
-        loadStatus = "fetching"
-        guard let url: URL = URL(string: "http://qiita.com/api/v2/items?page=\(count)&per_page=20") else { return }
+        guard loadStatus != .fetching && loadStatus != .full else { return }
+        loadStatus = .fetching
+        guard let url: URL = URL(string: "http://qiita.com/api/v2/items?page=\(page)&per_page=20") else { return }
         let task: URLSessionTask  = URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             do {
                 guard let data = data else {
-                    self.loadStatus = "error"
+                    self.loadStatus = .error
                     return
                 }
                 guard let jsonArray = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [Any] else {
-                    self.loadStatus = "error"
+                    self.loadStatus = .error
                     return
                 }
                 let articlesJson = jsonArray.flatMap { (json: Any) -> [String: Any]? in
@@ -42,20 +42,34 @@ class ViewModel {
                     return Article(json: articleJson)
                 }
                 if articles.count == 0 {
-                    self.loadStatus = "full"
+                    self.loadStatus = .full
                     return
                 }
                 DispatchQueue.main.async() { () -> Void in
                     self.articles = self.articles + articles
-                    self.loadStatus = "loadmore"
+                    self.loadStatus = .loadMore
                 }
-                self.count += 1
+                if self.page == 100 {
+                    self.loadStatus = .full
+                    return
+                }
+                self.page += 1
             }
             catch {
                 print(error)
-                self.loadStatus = "error"
+                self.loadStatus = .error
             }
         })
         task.resume()
     }
+
+    enum LoadStatus {
+        case initial
+        case fetching
+        case loadMore
+        case full
+        case error
+    }
 }
+
+
