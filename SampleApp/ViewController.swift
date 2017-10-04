@@ -69,15 +69,12 @@ extension ViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
-        let percent = currentOffsetY / maximumOffset
+        let distanceToBottom = maximumOffset - currentOffsetY
         print("currentOffsetY: \(currentOffsetY)")
         print("maximumOffset: \(maximumOffset)")
-        print("percent: \(percent)")
-
-        print(percent >= 0.7)
-        if percent >= 0.7 {
+        print("distanceToBottom: \(distanceToBottom)")
+        if distanceToBottom < 500 {
             viewModel.fetchArticles()
         }
-        return
     }
 }
