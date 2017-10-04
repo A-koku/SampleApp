@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    private let viewModel = ViewModel()
+    fileprivate let viewModel = ViewModel()
 
     fileprivate var articles: [Article] {
         return viewModel.articles
@@ -67,6 +67,17 @@ extension ViewController: UITableViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffsetY = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
+        let percent = currentOffsetY / maximumOffset
+        print("currentOffsetY: \(currentOffsetY)")
+        print("maximumOffset: \(maximumOffset)")
+        print("percent: \(percent)")
+
+        print(percent >= 0.7)
+        if percent >= 0.7 {
+            viewModel.fetchArticles()
+        }
         return
     }
 }
