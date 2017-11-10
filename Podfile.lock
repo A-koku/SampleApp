@@ -1,14 +1,37 @@
 PODS:
+  - RxCocoa (3.6.1):
+    - RxSwift (~> 3.6)
+  - RxSwift (3.6.1)
   - SDWebImage (4.1.0):
     - SDWebImage/Core (= 4.1.0)
   - SDWebImage/Core (4.1.0)
 
 DEPENDENCIES:
+  - RxCocoa (from `https://github.com/ReactiveX/RxSwift`, branch `rxswift-3.0`)
+  - RxSwift (from `https://github.com/ReactiveX/RxSwift`, branch `rxswift-3.0`)
   - SDWebImage (~> 4.0)
 
+EXTERNAL SOURCES:
+  RxCocoa:
+    :branch: rxswift-3.0
+    :git: https://github.com/ReactiveX/RxSwift
+  RxSwift:
+    :branch: rxswift-3.0
+    :git: https://github.com/ReactiveX/RxSwift
+
+CHECKOUT OPTIONS:
+  RxCocoa:
+    :commit: f1ac19a50c43b44024911192c3ac331cb80d250e
+    :git: https://github.com/ReactiveX/RxSwift
+  RxSwift:
+    :commit: f1ac19a50c43b44024911192c3ac331cb80d250e
+    :git: https://github.com/ReactiveX/RxSwift
+
 SPEC CHECKSUMS:
+  RxCocoa: 74590292782270293bec4f6be0edb72b3310030d
+  RxSwift: 54c92b0ae783a364051f62a21d31ff972c5e41c4
   SDWebImage: 0e435c14e402a6730315a0fb79f95e68654d55a4
 
-PODFILE CHECKSUM: f707910419a4ae47e7ede6817a45eeef6ba8a928
+PODFILE CHECKSUM: 462b5b308eccb6a7967fc051797dd91ca7bcf83d
 
 COCOAPODS: 1.3.1

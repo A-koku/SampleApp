@@ -7,6 +7,8 @@ target 'SampleApp' do
 
   # Pods for SampleApp
   pod 'SDWebImage', '~> 4.0'
+  pod 'RxSwift', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'rxswift-3.0'
+  pod 'RxCocoa', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'rxswift-3.0'
 
   target 'SampleAppTests' do
     inherit! :search_paths
